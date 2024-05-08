@@ -26,8 +26,6 @@ from openai import AsyncOpenAI
 
 from core.authentication import AuthenticationHelper
 from text import nonewlines
-
-
 @dataclass
 class Document:
     id: Optional[str]
@@ -42,7 +40,7 @@ class Document:
     captions: List[QueryCaptionResult]
     score: Optional[float] = None
     reranker_score: Optional[float] = None
-
+# Add a serialize_for_results method to the Document class
     def serialize_for_results(self) -> dict[str, Any]:
         return {
             "id": self.id,
@@ -70,6 +68,7 @@ class Document:
             "reranker_score": self.reranker_score,
         }
 
+# Add a class method to the Document class to trim the embedding list
     @classmethod
     def trim_embedding(cls, embedding: Optional[List[float]]) -> Optional[str]:
         """Returns a trimmed list of floats from the vector embedding."""
